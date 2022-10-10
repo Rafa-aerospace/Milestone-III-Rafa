@@ -47,7 +47,7 @@ Temoral_schemes_available = {0:"Euler",
                              3:"Crank-Nicolson"}
 
 '''\\\\\\\\\\\\\\\\\\\\\\'''
-k = 3 # Selection of Numeric Scheme
+k = 1 # Selection of Numeric Scheme
 
 Differential_operator = Kepler_Orbits_2N
 
