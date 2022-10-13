@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 """
 Created on Mon Oct 10 17:33:50 2022
 
-@author: rafra
+@author: Rafael Rivero de Nicolás
 """
 
 from numpy import zeros, linspace, log10, append
@@ -30,53 +29,6 @@ from scipy.optimize import curve_fit
 '''--------------------------------------------------------'''
 '''--------------------------------------------------------'''
 
-def Richardson_Error_Extrapolation(Differential_operator, Initial_conditions, time_domain, temporal_scheme, Save=False):
-    
-    if temporal_scheme == "Euler":
-        scheme_order = 1
-    elif temporal_scheme == "Inverse Euler":
-        scheme_order = 1
-    elif temporal_scheme == "RK4":
-        scheme_order = 4
-    elif temporal_scheme == "Crank-Nicolson":
-        scheme_order = 2
-    
-    t1 = time_domain; dt = t1[1]-t1[0]; tf = t1[-1]
-    t2 = linspace(t1[0], t1[-1], 2*(len(t1)-1)+1)
-    
-    X_1 = mth.Cauchy_Problem( Differential_operator, Initial_conditions, t1, Temporal_scheme = temporal_scheme )
-    X_2 = mth.Cauchy_Problem( Differential_operator, Initial_conditions, t2, Temporal_scheme = temporal_scheme )
-
-    # Richardson_Error = np.zeros([len(Initial_conditions), len(t1)])
-    
-    Richardson_Error = zeros(len(t1))
-
-    for i in range(0,len(t1)):
-        
-        Richardson_Error[i] = norm( X_2[:,2*i] - X_1[:,i] ) / ( 1- ( 1 / 2**scheme_order ) )
-    
-    
-    x = t1
-    y = Richardson_Error
-
-    fig, ax = plt.subplots(1,1, figsize=(7,7), constrained_layout='true')
-    ax.set_title('Error of '+temporal_scheme+r' for $t_f$ = '+str(tf), fontsize=20)
-    ax.grid()
-    ax.set_xlabel(r'$t$',fontsize=20)
-    ax.set_ylabel(r'$|E|$',fontsize=20)
-    ax.plot( x, y, c='b', label=r'$\Delta t$ = '+str(dt))
-    plt.show()
-    
-    if Save == True:
-        
-        fig.savefig('Plots\HITO_3_Richardson_'+temporal_scheme+'_tf='+str(tf)+'.pdf', transparent = True, bbox_inches="tight")
-        
-    return Richardson_Error
-
-
-def model_function(x, a, b):
-    return a*x + b
-
 def Convergence_Rate(Differential_operator, Initial_conditions, tf, temporal_scheme, M, Adjust = False, Save = False):
     
     t = {}; X = {}; log_DU = {}; log_N = {} # Dictionaries initialization
@@ -89,6 +41,11 @@ def Convergence_Rate(Differential_operator, Initial_conditions, tf, temporal_sch
         dt = 0.1
     elif temporal_scheme == "Crank-Nicolson":
         dt = 0.1
+    
+    if str(Differential_operator)[10:-23] == "Kepler_Orbits_2N":
+        problem = "Kepler Orbits: 2 Bodies [2D]"
+    elif str(Differential_operator)[10:-23] == "Undamped_Armonic_Oscilator":
+        problem = "Undamped Armonic Oscilator [1D]"
     
     '''---------------- Computing based on Richardson extrapolation ----------------'''
     for i in range(M):
@@ -133,7 +90,8 @@ def Convergence_Rate(Differential_operator, Initial_conditions, tf, temporal_sch
     fig, ax = plt.subplots(1,1, figsize=(7,7), constrained_layout='true')
     # ax.set_xlim(-1.25,1.25)
     # ax.set_ylim(-1.25,1.25)
-    ax.set_title('Convergence of temporal schemes: '+temporal_scheme+r' for $t_f$ = '+str(tf), fontsize=20)
+    ax.set_title('Convergence of '+problem+ 
+                 '\nTemporal Scheme: '+temporal_scheme+r', $t_f$ = '+str(tf), fontsize=20)
     ax.grid()
     ax.set_xlabel(r'$\log(N)$',fontsize=20)
     ax.set_ylabel(r'$\log(U_1^n - U_2^{2n})$',fontsize=20)
@@ -147,8 +105,60 @@ def Convergence_Rate(Differential_operator, Initial_conditions, tf, temporal_sch
         ax.text(0.8, 0.8, textstring, transform=ax.transAxes,
                 bbox=dict(facecolor='white', edgecolor='black'), size=18)
 
-    plt.show()
+    
     ax.legend(loc=0, fancybox=False, edgecolor="black", ncol = 1, fontsize=16) 
 
     if Save == True:
-        fig.savefig('Plots\HITO_3'+temporal_scheme+'_M=_'+str(M)+'_tf='+str(tf)+'.pdf', transparent = True, bbox_inches="tight")
+        fig.savefig('H3_ConvRate_'+problem[0:3]+'_'+temporal_scheme[0:3]+'_'+str(tf)+'.pdf', transparent = True, bbox_inches="tight")
+
+def Richardson_Error_Extrapolation(Differential_operator, Initial_conditions, time_domain, temporal_scheme, Save=False):
+    
+    if temporal_scheme == "Euler":
+        scheme_order = 1
+    elif temporal_scheme == "Inverse Euler":
+        scheme_order = 1
+    elif temporal_scheme == "RK4":
+        scheme_order = 4
+    elif temporal_scheme == "Crank-Nicolson":
+        scheme_order = 2
+
+    if str(Differential_operator)[10:-23] == "Kepler_Orbits_2N":
+        problem = "Kepler Orbits: 2 Bodies [2D]"
+    elif str(Differential_operator)[10:-23] == "Undamped_Armonic_Oscilator":
+        problem = "Undamped Armonic Oscilator [1D]"
+    
+    t1 = time_domain; dt = t1[1]-t1[0]; tf = t1[-1]
+    t2 = linspace(t1[0], t1[-1], 2*(len(t1)-1)+1)
+    
+    X_1 = mth.Cauchy_Problem( Differential_operator, Initial_conditions, t1, Temporal_scheme = temporal_scheme )
+    X_2 = mth.Cauchy_Problem( Differential_operator, Initial_conditions, t2, Temporal_scheme = temporal_scheme )
+
+    # Richardson_Error = np.zeros([len(Initial_conditions), len(t1)])
+    
+    Richardson_Error = zeros(len(t1))
+
+    for i in range(0,len(t1)):
+        
+        Richardson_Error[i] = norm( X_2[:,2*i] - X_1[:,i] ) / ( 1- ( 1 / 2**scheme_order ) )
+    
+    
+    x = t1
+    y = Richardson_Error
+
+    fig, ax = plt.subplots(1,1, figsize=(7,7), constrained_layout='true')
+    ax.set_title('Error of '+problem+
+                 '\nTemporal Scheme: '+temporal_scheme+r', $t_f$ = '+str(tf), fontsize=20)
+    ax.grid()
+    ax.set_xlabel(r'$t$',fontsize=20)
+    ax.set_ylabel(r'$|E|$',fontsize=20)
+    ax.plot( x, y, c='b', label=r'$\Delta t$ = '+str(dt))
+    
+    if Save == True:
+        
+        fig.savefig('H3_Error_'+problem[0:3]+'_'+temporal_scheme[0:3]+'_'+str(tf)+'.pdf', transparent = True, bbox_inches="tight")
+        
+    return Richardson_Error
+
+
+def model_function(x, a, b):
+    return a*x + b
