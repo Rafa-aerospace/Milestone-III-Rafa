@@ -4,8 +4,8 @@ Created on Thu Oct  6 18:16:52 2022
 @author: Rafael Rivero de Nicolás
 """
 from numpy import array, linspace, hstack
-import LB_Error_and_Convergence_rate as LB_erc
-import LB_Physics_Problems as ph
+import LB_Error_and_Convergence_rate as LB_erc # User's Module
+import LB_Physics_Problems as ph # User's module
 
 # %% Initialitation
 

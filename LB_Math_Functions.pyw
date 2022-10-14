@@ -2,7 +2,7 @@
 """
 Created on Fri Sep 30 21:03:25 2022
 
-@author: rafra
+@author: Rafael Rivero de Nicolás
 """
 
 from numpy import zeros, linalg, matmul
