@@ -18,9 +18,9 @@ Physics_Problems_available = {0:"Kepler Orbits: 2 Bodies [2D]",
                               1:"Undamped Armonic Oscilator [1D]"}
 
 '''\\\\\\\\\\\\\\\\\\\\\\'''
-k = 1 # Selection of Numeric Scheme 0-1-2-3
+k = 2 # Selection of Numeric Scheme 0-1-2-3
 P = 0 # 0-1
-tf = 100
+tf = 10
 
 if P == 0:
     r_0 = array([1, 0]); v_0 = array([0, 1]) # Initial position and velocity, respectively. [Kepler Orbits 2 Bodies [2D]]

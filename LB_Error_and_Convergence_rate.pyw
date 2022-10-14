@@ -36,11 +36,11 @@ def Convergence_Rate(Differential_operator, Initial_conditions, tf, temporal_sch
     if temporal_scheme == "Euler":
         dt = 0.00001*tf
     elif temporal_scheme == "Inverse Euler":
-        dt = 0.00001*tf
+        dt = 0.001*tf
     elif temporal_scheme == "RK4":
         dt = 0.01*tf
     elif temporal_scheme == "Crank-Nicolson":
-        dt = 0.001*tf
+        dt = 0.01*tf
     
     if str(Differential_operator)[10:-23] == "Kepler_Orbits_2N":
         problem = "Kepler Orbits: 2 Bodies [2D]"
@@ -111,6 +111,7 @@ def Convergence_Rate(Differential_operator, Initial_conditions, tf, temporal_sch
 
     if Save == True:
         fig.savefig('Plots/H3_ConvRate_'+problem[0:3]+'_'+temporal_scheme[0:3]+'_'+str(tf)+'.pdf', transparent = True, bbox_inches="tight")
+
 
 def Richardson_Error_Extrapolation(Differential_operator, Initial_conditions, time_domain, temporal_scheme, Save=False):
     
