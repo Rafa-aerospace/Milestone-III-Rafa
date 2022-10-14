@@ -1,7 +1,7 @@
 """
 Created on Thu Oct 13 16:22:30 2022
 
-@author: Rafael Rivero de Nicol·s
+@author: Rafael Rivero de Nicol√°s
 """
 
 from numpy import array
@@ -58,4 +58,3 @@ def Undamped_Armonic_Oscilator(X, t):
 
     '''
     return array([X[1], -X[0]])
-

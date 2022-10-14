@@ -18,9 +18,9 @@ Physics_Problems_available = {0:"Kepler Orbits: 2 Bodies [2D]",
                               1:"Undamped Armonic Oscilator [1D]"}
 
 '''\\\\\\\\\\\\\\\\\\\\\\'''
-k = 3 # Selection of Numeric Scheme 0-1-2-3
+k = 1 # Selection of Numeric Scheme 0-1-2-3
 P = 0 # 0-1
-tf = 10
+tf = 100
 
 if P == 0:
     r_0 = array([1, 0]); v_0 = array([0, 1]) # Initial position and velocity, respectively. [Kepler Orbits 2 Bodies [2D]]
@@ -40,7 +40,7 @@ scheme = Temporal_schemes_available[k]
 M = 9 # Number of points to compute q
 
 LB_erc.Convergence_Rate(Differential_operator = Differential_operator, Initial_conditions = Initial_conditions,
-                  tf = tf, temporal_scheme = scheme, M = M, Adjust = True, Save = False)
+                  tf = tf, temporal_scheme = scheme, M = M, Adjust = True, Save = True)
                  
 # %% Richardson Extrapolation to compute Error
 
@@ -48,4 +48,4 @@ dt_R = 0.01
 
 time_domain_Richardson = linspace(0, tf, int(tf/dt_R)+1)
 
-LB_erc.Richardson_Error_Extrapolation(Differential_operator, Initial_conditions, time_domain_Richardson, scheme, Save = False)
+LB_erc.Richardson_Error_Extrapolation(Differential_operator, Initial_conditions, time_domain_Richardson, scheme, Save = True)
