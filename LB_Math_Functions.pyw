@@ -6,7 +6,7 @@ Created on Fri Sep 30 21:03:25 2022
 """
 
 from numpy import zeros, linalg, matmul
-import LB_Temporal_Schemes as ts
+import LB_Temporal_Schemes as ts # User's module
 
 
 def Cauchy_Problem(F, U_0, time_domain, Temporal_scheme='RK4'):

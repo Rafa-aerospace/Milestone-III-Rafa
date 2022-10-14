@@ -7,7 +7,7 @@ Created on Mon Oct 10 17:33:50 2022
 from numpy import zeros, linspace, log10, append
 from numpy.linalg import norm
 
-import LB_Math_Functions as mth
+import LB_Math_Functions as mth # User's Module
 
 import matplotlib.pyplot as plt
 
