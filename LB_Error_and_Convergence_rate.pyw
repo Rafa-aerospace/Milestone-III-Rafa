@@ -68,8 +68,6 @@ def Convergence_Rate(Differential_operator, Initial_conditions, tf, temporal_sch
         
         log_N[j] = log10( len( t[key_list[j]] ) )
 
-
-
     '''----------------PLotting----------------'''
     x, y = [], []
 
