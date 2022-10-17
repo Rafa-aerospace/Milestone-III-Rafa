@@ -40,7 +40,7 @@ scheme = Temporal_schemes_available[k]
 M = 9 # Number of points to compute q
 
 LB_erc.Convergence_Rate(Differential_operator = Differential_operator, Initial_conditions = Initial_conditions,
-                  tf = tf, temporal_scheme = scheme, M = M, Adjust = True, Save = True)
+                  tf = tf, temporal_scheme = scheme, M = M, Adjust = True, Save = False)
                  
 # %% Richardson Extrapolation to compute Error
 
@@ -48,4 +48,4 @@ dt_R = 0.01
 
 time_domain_Richardson = linspace(0, tf, int(tf/dt_R)+1)
 
-LB_erc.Richardson_Error_Extrapolation(Differential_operator, Initial_conditions, time_domain_Richardson, scheme, Save = True)
+LB_erc.Richardson_Error_Extrapolation(Differential_operator, Initial_conditions, time_domain_Richardson, scheme, Save = False)

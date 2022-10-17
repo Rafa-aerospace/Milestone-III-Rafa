@@ -5,6 +5,7 @@ Created on Thu Oct 13 16:22:30 2022
 """
 
 from numpy import array
+import warnings
 
 def Problem_Assignment(problem,Physics_Problems_available):
     
@@ -17,7 +18,9 @@ def Problem_Assignment(problem,Physics_Problems_available):
         return Undamped_Armonic_Oscilator
         
     else:
-        print("Introduce a valid problem equation to solve\n\t", Physics_Problems_available )
+
+        warnings.warn('Introduce a valid problem equation to solve\n\t', Physics_Problems_available)
+
         return "ERROR"
 
 def Kepler_Orbits_2N(X, t):
