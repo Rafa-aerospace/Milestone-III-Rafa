@@ -18,7 +18,7 @@ Physics_Problems_available = {0:"Kepler Orbits: 2 Bodies [2D]",
                               1:"Undamped Armonic Oscilator [1D]"}
 
 '''\\\\\\\\\\\\\\\\\\\\\\'''
-k = 2 # Selection of Numeric Scheme 0-1-2-3
+k = 3 # Selection of Numeric Scheme 0-1-2-3
 P = 0 # 0-1
 tf = 10
 
